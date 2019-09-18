@@ -8,10 +8,18 @@ import com.nhaarman.acorn.android.presentation.ViewController
 import com.nhaarman.acorn.android.presentation.ViewProvidingScene
 import dev.gumil.acorn.R
 
-internal class HomeScene : ViewProvidingScene<HomeViewController> {
+internal class HomeScene(
+    private val listener: Events
+) : ViewProvidingScene<HomeViewController> {
 
     override fun createViewController(parent: ViewGroup): ViewController {
-        return HomeViewController(HomeView(parent.context, DemoModel.values().toList()))
+        return HomeViewController(HomeView(parent.context, DemoModel.values().toList()) {
+            listener.onItemClicked(it)
+        })
+    }
+
+    interface Events {
+        fun onItemClicked(demoModel: DemoModel)
     }
 }
 

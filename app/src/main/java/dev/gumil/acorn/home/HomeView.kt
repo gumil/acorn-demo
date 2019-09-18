@@ -2,7 +2,6 @@ package dev.gumil.acorn.home
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.contour.ContourLayout
@@ -10,7 +9,8 @@ import com.squareup.contour.ContourLayout
 @SuppressLint("ViewConstructor")
 internal class HomeView(
     context: Context,
-    var demoModels: List<DemoModel>
+    private val demoModels: List<DemoModel>,
+    private val onItemClickedListener: (DemoModel) -> Unit
 ) : ContourLayout(context) {
 
     private val homeAdapter by lazy {
@@ -31,6 +31,6 @@ internal class HomeView(
     }
 
     private fun onItemClicked(position: Int, demoModel: DemoModel) {
-        Toast.makeText(context, demoModel.title, Toast.LENGTH_LONG).show()
+        onItemClickedListener(demoModel)
     }
 }
