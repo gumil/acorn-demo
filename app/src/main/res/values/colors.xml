@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#263239</color>
+    <color name="colorPrimaryDark">#21272c</color>
+    <color name="colorAccent">#1976d2</color>
+
+    <color name="white">@android:color/white</color>
 
     <color name="red_300">#f36c60</color>
     <color name="blue_grey_300">#90a4ae</color>
@@ -13,4 +15,37 @@
     <color name="deep_orange_300">#ff8a65</color>
     <color name="grey_300">#e0e0e0</color>
     <color name="lime_300">#dce775</color>
+
+    <color name="teal_300">#4db6ac</color>
+    <color name="light_green_300">#aed581</color>
+    <color name="brown_300">#a1887f</color>
+    <color name="deep_purple_300">#9575cd</color>
+    <color name="indigo_300">#7986cb</color>
+    <color name="yellow_300">#fff176</color>
+    <color name="blue_300">#91a7ff</color>
+    <color name="light_blue_300">#4fc3f7</color>
+    <color name="cyan_300">#4dd0e1</color>
+    <color name="grey_400">#78909C</color>
+
+
+    <array name="mdcolor_300">
+        <item name="md_red_300" type="color">@color/red_300</item>
+        <item name="md_light_green_300" type="color">@color/light_green_300</item>
+        <item name="md_teal_300" type="color">@color/teal_300</item>
+        <item name="md_pink_300" type="color">@color/pink_300</item>
+        <item name="md_brown_300" type="color">@color/brown_300</item>
+        <item name="md_purple_300" type="color">@color/purple_300</item>
+        <item name="md_lime_300" type="color">@color/lime_300</item>
+        <item name="md_blue_grey_300" type="color">@color/blue_grey_300</item>
+        <item name="md_deep_purple_300" type="color">@color/deep_purple_300</item>
+        <item name="md_green_300" type="color">@color/green_300</item>
+        <item name="md_indigo_300" type="color">@color/indigo_300</item>
+        <item name="md_yellow_300" type="color">@color/yellow_300</item>
+        <item name="md_blue_300" type="color">@color/blue_300</item>
+        <item name="md_orange_300" type="color">@color/orange_300</item>
+        <item name="md_light_blue_300" type="color">@color/light_blue_300</item>
+        <item name="md_deep_orange_300" type="color">@color/deep_orange_300</item>
+        <item name="md_cyan_300" type="color">@color/cyan_300</item>
+        <item name="md_grey_300" type="color">@color/grey_300</item>
+    </array>
 </resources>
