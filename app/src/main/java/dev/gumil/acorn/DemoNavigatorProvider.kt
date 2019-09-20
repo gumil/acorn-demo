@@ -3,15 +3,39 @@ package dev.gumil.acorn
 import com.nhaarman.acorn.android.navigation.AbstractNavigatorProvider
 import com.nhaarman.acorn.navigation.CompositeStackNavigator
 import com.nhaarman.acorn.navigation.Navigator
+import com.nhaarman.acorn.navigation.TransitionData
+import com.nhaarman.acorn.presentation.Container
+import com.nhaarman.acorn.presentation.Scene
 import com.nhaarman.acorn.state.NavigatorState
 import dev.gumil.acorn.home.DemoModel
 import dev.gumil.acorn.home.HomeNavigator
 import dev.gumil.acorn.navigation.NavigationNavigator
+import dev.gumil.acorn.navigation.NavigationScene
 import kotlin.reflect.KClass
 
-internal object DemoNavigatorProvider : AbstractNavigatorProvider<DemoNavigator>() {
+internal class DemoNavigatorProvider(
+    private val listener: ToolbarNavigatorListener
+) : AbstractNavigatorProvider<DemoNavigator>() {
+
     override fun createNavigator(savedState: NavigatorState?): DemoNavigator {
-        return DemoNavigator(savedState)
+        return DemoNavigator(savedState).apply { addNavigatorEventsListener(listener) }
+    }
+}
+
+internal class ToolbarNavigatorListener(
+    private val toolbarScreen: ToolbarScreen
+) : Navigator.Events {
+    override fun finished() {
+        // do nothing
+    }
+
+    override fun scene(scene: Scene<out Container>, data: TransitionData?) {
+        val title = when (scene) {
+            is NavigationScene -> DemoModel.NAVIGATION.title
+            else -> "Acorn Demo"
+        }
+
+        toolbarScreen.setToolbarTitle(title)
     }
 }
 
@@ -55,7 +79,6 @@ internal class DemoNavigator(
             DemoModel.DRAG_DISMISS -> TODO()
         }
     }
-
 }
 
 internal interface DemoNavigatorEvents {

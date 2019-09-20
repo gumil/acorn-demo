@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import com.nhaarman.acorn.android.AcornAppCompatActivity
 import com.nhaarman.acorn.android.navigation.NavigatorProvider
 
-class MainActivity : AcornAppCompatActivity() {
+class MainActivity : AcornAppCompatActivity(), ToolbarScreen {
 
     private lateinit var rootView: ViewGroup
 
@@ -17,10 +17,18 @@ class MainActivity : AcornAppCompatActivity() {
     }
 
     override fun provideNavigatorProvider(): NavigatorProvider {
-        return DemoNavigatorProvider
+        return DemoNavigatorProvider(ToolbarNavigatorListener(this))
     }
 
     override fun provideRootView(): ViewGroup {
         return rootView
     }
+
+    override fun setToolbarTitle(title: String) {
+        supportActionBar?.title = title
+    }
+}
+
+interface ToolbarScreen {
+    fun setToolbarTitle(title: String)
 }
