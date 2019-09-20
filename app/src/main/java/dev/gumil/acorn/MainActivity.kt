@@ -5,6 +5,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.nhaarman.acorn.android.AcornAppCompatActivity
 import com.nhaarman.acorn.android.navigation.NavigatorProvider
+import com.nhaarman.acorn.android.presentation.ViewControllerFactory
+import com.nhaarman.acorn.android.transition.ComposingSceneTransitionFactory
+import com.nhaarman.acorn.android.transition.SceneTransitionFactory
+import dev.gumil.acorn.navigation.NavigationTransitionFactory
 
 class MainActivity : AcornAppCompatActivity(), ToolbarScreen {
 
@@ -22,6 +26,12 @@ class MainActivity : AcornAppCompatActivity(), ToolbarScreen {
 
     override fun provideRootView(): ViewGroup {
         return rootView
+    }
+
+    override fun provideTransitionFactory(viewControllerFactory: ViewControllerFactory): SceneTransitionFactory {
+        return ComposingSceneTransitionFactory.from(
+            NavigationTransitionFactory(viewControllerFactory)
+        )
     }
 
     override fun setToolbarTitle(title: String) {

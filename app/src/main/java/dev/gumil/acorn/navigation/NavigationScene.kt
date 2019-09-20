@@ -11,7 +11,7 @@ import com.nhaarman.acorn.state.get
 
 internal class NavigationScene(
     private val listener: Events,
-    private val index: Int = 0,
+    val index: Int = 0,
     private val displayUpMode: DisplayUpMode = DisplayUpMode.SHOW_FOR_CHILDREN_ONLY,
     savedState: SceneState? = null
 ) : BasicScene<NavigationViewController>(savedState),
