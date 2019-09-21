@@ -1,24 +1,23 @@
 package dev.gumil.acorn.navigation
 
-import android.view.View
 import android.view.ViewGroup
-import com.nhaarman.acorn.android.presentation.RestorableViewController
 import com.nhaarman.acorn.android.presentation.ViewController
 import com.nhaarman.acorn.android.presentation.ViewProvidingScene
 import com.nhaarman.acorn.presentation.BasicScene
 import com.nhaarman.acorn.state.SceneState
 import com.nhaarman.acorn.state.get
+import dev.gumil.acorn.util.DemoViewController
 
 internal class NavigationScene(
     private val listener: Events,
     val index: Int = 0,
     private val displayUpMode: DisplayUpMode = DisplayUpMode.SHOW_FOR_CHILDREN_ONLY,
     savedState: SceneState? = null
-) : BasicScene<NavigationViewController>(savedState),
-    ViewProvidingScene<NavigationViewController> {
+) : BasicScene<DemoViewController<NavigationView>>(savedState),
+    ViewProvidingScene<DemoViewController<NavigationView>> {
 
     override fun createViewController(parent: ViewGroup): ViewController {
-        return NavigationViewController(NavigationView(parent.context, index, displayUpMode) {
+        return DemoViewController(NavigationView(parent.context, index, displayUpMode) {
             when (it) {
                 NavigationView.NavEvents.PopToRoot -> listener.popToRoot()
                 NavigationView.NavEvents.Up -> listener.up()
@@ -53,10 +52,6 @@ internal class NavigationScene(
         }
     }
 }
-
-internal class NavigationViewController(
-    override val view: View
-) : RestorableViewController
 
 internal enum class DisplayUpMode {
     SHOW,

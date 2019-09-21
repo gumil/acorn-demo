@@ -1,31 +1,20 @@
 package dev.gumil.acorn.home
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
-import com.nhaarman.acorn.android.presentation.RestorableViewController
 import com.nhaarman.acorn.android.presentation.ViewController
 import com.nhaarman.acorn.android.presentation.ViewProvidingScene
 import dev.gumil.acorn.R
+import dev.gumil.acorn.util.DemoViewController
 
 internal class HomeScene(
-    private val listener: Events
-) : ViewProvidingScene<HomeViewController> {
+    private val onItemClickedListener: (DemoModel) -> Unit
+) : ViewProvidingScene<DemoViewController<HomeView>> {
 
     override fun createViewController(parent: ViewGroup): ViewController {
-        return HomeViewController(HomeView(parent.context, DemoModel.values().toList()) {
-            listener.onItemClicked(it)
-        })
-    }
-
-    interface Events {
-        fun onItemClicked(demoModel: DemoModel)
+        return DemoViewController(HomeView(parent.context, DemoModel.values().toList(), onItemClickedListener))
     }
 }
-
-internal class HomeViewController(
-    override val view: View
-) : RestorableViewController
 
 internal enum class DemoModel(
     val title: String,

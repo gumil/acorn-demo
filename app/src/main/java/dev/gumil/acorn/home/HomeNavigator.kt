@@ -11,10 +11,10 @@ import kotlin.reflect.KClass
 internal class HomeNavigator(
     private val events: DemoNavigatorEvents,
     savedState: NavigatorState?
-) : StackNavigator(savedState), HomeScene.Events {
+) : StackNavigator(savedState) {
 
     override fun initialStack(): List<Scene<out Container>> {
-        return listOf(HomeScene(this))
+        return listOf(HomeScene(::onItemClicked))
     }
 
     override fun instantiateScene(
@@ -22,12 +22,12 @@ internal class HomeNavigator(
         state: SceneState?
     ): Scene<out Container> {
         return when (sceneClass) {
-            HomeScene::class -> HomeScene(this)
+            HomeScene::class -> HomeScene(::onItemClicked)
             else -> error("Unknown scene: $sceneClass")
         }
     }
 
-    override fun onItemClicked(demoModel: DemoModel) {
+    private fun onItemClicked(demoModel: DemoModel) {
         events.push(demoModel)
     }
 }
