@@ -1,4 +1,4 @@
-package dev.gumil.acorn.transition
+package dev.gumil.acorn.util
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.animation.addListener
 import com.nhaarman.acorn.android.presentation.ViewController
 import com.nhaarman.acorn.android.transition.SceneTransition
-import dev.gumil.acorn.util.doOnPreDraw
 
 
 internal class SegueTransition(

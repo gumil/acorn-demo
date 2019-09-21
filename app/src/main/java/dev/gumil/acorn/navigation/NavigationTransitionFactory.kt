@@ -6,7 +6,7 @@ import com.nhaarman.acorn.android.transition.SceneTransitionFactory
 import com.nhaarman.acorn.navigation.TransitionData
 import com.nhaarman.acorn.presentation.Scene
 import dev.gumil.acorn.home.HomeScene
-import dev.gumil.acorn.transition.SegueTransition
+import dev.gumil.acorn.util.SegueTransition
 
 internal class NavigationTransitionFactory(
     private val viewControllerFactory: ViewControllerFactory
@@ -28,13 +28,16 @@ internal class NavigationTransitionFactory(
     ): SceneTransition {
         val isBackwards = newScene is NavigationScene && previousScene is NavigationScene &&
                 newScene.index < previousScene.index
-        return SegueTransition(if (data?.isBackwards == true || isBackwards) -1 else 1, { oldView, newView ->
-            (oldView as? NavigationView)?.setButtonsEnabled(false)
-            (newView as? NavigationView)?.setButtonsEnabled(false)
-        }, { oldView, newView ->
-            (oldView as? NavigationView)?.setButtonsEnabled(true)
-            (newView as? NavigationView)?.setButtonsEnabled(true)
-        }) {
+        return SegueTransition(
+            if (data?.isBackwards == true || isBackwards) -1 else 1,
+            { oldView, newView ->
+                (oldView as? NavigationView)?.setButtonsEnabled(false)
+                (newView as? NavigationView)?.setButtonsEnabled(false)
+            },
+            { oldView, newView ->
+                (oldView as? NavigationView)?.setButtonsEnabled(true)
+                (newView as? NavigationView)?.setButtonsEnabled(true)
+            }) {
             viewControllerFactory.viewControllerFor(newScene, it)
         }
     }
