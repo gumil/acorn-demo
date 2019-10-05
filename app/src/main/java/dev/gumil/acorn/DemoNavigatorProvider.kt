@@ -3,6 +3,7 @@ package dev.gumil.acorn
 import com.nhaarman.acorn.android.navigation.AbstractNavigatorProvider
 import com.nhaarman.acorn.navigation.CompositeStackNavigator
 import com.nhaarman.acorn.navigation.Navigator
+import com.nhaarman.acorn.navigation.SavableNavigator
 import com.nhaarman.acorn.navigation.TransitionData
 import com.nhaarman.acorn.presentation.Container
 import com.nhaarman.acorn.presentation.Scene
@@ -41,7 +42,7 @@ internal class ToolbarNavigatorListener(
 
 internal class DemoNavigator(
     savedState: NavigatorState?
-) : CompositeStackNavigator(savedState),
+) : CompositeStackNavigator(savedState), SavableNavigator,
     DemoNavigatorEvents {
 
     override fun initialStack(): List<Navigator> {
@@ -54,6 +55,7 @@ internal class DemoNavigator(
     ): Navigator {
         return when (navigatorClass) {
             HomeNavigator::class -> HomeNavigator(this, state)
+            NavigationNavigator::class -> NavigationNavigator(this, state)
             else -> error("Could not instantiate navigator for class $navigatorClass.")
         }
     }

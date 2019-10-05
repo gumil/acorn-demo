@@ -1,5 +1,6 @@
 package dev.gumil.acorn.home
 
+import com.nhaarman.acorn.navigation.SavableNavigator
 import com.nhaarman.acorn.navigation.StackNavigator
 import com.nhaarman.acorn.presentation.Container
 import com.nhaarman.acorn.presentation.Scene
@@ -11,7 +12,7 @@ import kotlin.reflect.KClass
 internal class HomeNavigator(
     private val events: DemoNavigatorEvents,
     savedState: NavigatorState?
-) : StackNavigator(savedState) {
+) : StackNavigator(savedState), SavableNavigator {
 
     override fun initialStack(): List<Scene<out Container>> {
         return listOf(HomeScene(::onItemClicked))
