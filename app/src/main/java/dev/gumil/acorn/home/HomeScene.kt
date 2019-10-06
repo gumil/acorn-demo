@@ -2,17 +2,29 @@ package dev.gumil.acorn.home
 
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
+import com.nhaarman.acorn.android.presentation.ProvidesView
 import com.nhaarman.acorn.android.presentation.ViewController
-import com.nhaarman.acorn.android.presentation.ViewProvidingScene
+import com.nhaarman.acorn.presentation.BasicScene
+import com.nhaarman.acorn.presentation.SavableScene
+import com.nhaarman.acorn.state.SceneState
 import dev.gumil.acorn.R
 import dev.gumil.acorn.util.DemoViewController
 
 internal class HomeScene(
-    private val onItemClickedListener: (DemoModel) -> Unit
-) : ViewProvidingScene<DemoViewController<HomeView>> {
+    private val onItemClickedListener: (DemoModel) -> Unit,
+    savedState: SceneState? = null
+) : ProvidesView,
+    BasicScene<DemoViewController<HomeView>>(savedState),
+    SavableScene {
 
     override fun createViewController(parent: ViewGroup): ViewController {
-        return DemoViewController(HomeView(parent.context, DemoModel.values().toList(), onItemClickedListener))
+        return DemoViewController(
+            HomeView(
+                parent.context,
+                DemoModel.values().toList(),
+                onItemClickedListener
+            )
+        )
     }
 }
 
@@ -28,5 +40,5 @@ internal enum class DemoModel(
     TARGET_CONTROLLER("Target Controller", R.color.pink_300),
     MULTIPLE_CHILD_ROUTERS("Multiple Child Routers", R.color.deep_orange_300),
     MASTER_DETAIL("Master Detail", R.color.grey_300),
-    DRAG_DISMISS("Drag Dismiss", R.color.lime_300),
+    DRAG_DISMISS("Drag Dismiss", R.color.lime_300)
 }
