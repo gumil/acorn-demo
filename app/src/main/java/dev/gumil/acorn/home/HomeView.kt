@@ -6,31 +6,30 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.contour.ContourLayout
 
-@SuppressLint("ViewConstructor")
+@SuppressLint("ViewConstructor", "ResourceType")
 internal class HomeView(
     context: Context,
-    private val demoModels: List<DemoModel>,
-    private val onItemClickedListener: (DemoModel) -> Unit
+    demoModels: List<DemoModel>,
+    onItemClickedListener: (DemoModel) -> Unit
 ) : ContourLayout(context) {
 
-    private val homeAdapter by lazy {
-        HomeAdapter(demoModels).apply {
-            onItemClicked = ::onItemClicked
+    init {
+        id = 1001
+
+        RecyclerView(context).apply {
+            id = 1002
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = HomeAdapter(demoModels).apply {
+                onItemClicked = { _, demoModel ->
+                    onItemClickedListener(demoModel)
+                }
+            }
+            applyLayout(
+                x = leftTo { parent.left() }
+                    .rightTo { parent.right() },
+                y = topTo { parent.top() }.bottomTo { parent.bottom() }
+            )
         }
-    }
-
-    private val recyclerView = RecyclerView(context).apply {
-        setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context)
-        adapter = homeAdapter
-        applyLayout(
-            x = leftTo { parent.left() }
-                .rightTo { parent.right() },
-            y = topTo { parent.top() }
-        )
-    }
-
-    private fun onItemClicked(position: Int, demoModel: DemoModel) {
-        onItemClickedListener(demoModel)
     }
 }
