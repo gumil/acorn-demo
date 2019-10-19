@@ -45,6 +45,23 @@ internal class DemoNavigator(
 ) : CompositeStackNavigator(savedState), SavableNavigator,
     DemoNavigatorEvents {
 
+    private val subNavigatorListener = object : Navigator.Events {
+        override fun finished() {
+            timeMachine.nodeVisited()
+        }
+
+        override fun scene(scene: Scene<out Container>, data: TransitionData?) {
+            // do nothing
+        }
+
+    }
+
+    private val timeMachine = TimeMachine(NavigatorNode(HomeNavigator::class.java.simpleName))
+
+    init {
+        addNavigatorEventsListener(timeMachine)
+    }
+
     override fun initialStack(): List<Navigator> {
         return listOf(HomeNavigator(this, null))
     }
@@ -57,15 +74,21 @@ internal class DemoNavigator(
             HomeNavigator::class -> HomeNavigator(this, state)
             NavigationNavigator::class -> NavigationNavigator(this, state)
             else -> error("Could not instantiate navigator for class $navigatorClass.")
+        }.apply {
+            addNavigatorEventsListener(subNavigatorListener)
         }
     }
 
     override fun push(demoModel: DemoModel) {
-        push(getNavigator(demoModel))
+        val navigator = getNavigator(demoModel)
+        timeMachine.addNode(NavigatorNode(navigator.javaClass.simpleName))
+        push(navigator)
     }
 
     override fun replace(demoModel: DemoModel) {
-        replace(getNavigator(demoModel))
+        val navigator = getNavigator(demoModel)
+        timeMachine.addNode(NavigatorNode(navigator.javaClass.simpleName))
+        replace(navigator)
     }
 
     private fun getNavigator(demoModel: DemoModel): Navigator {
@@ -79,6 +102,8 @@ internal class DemoNavigator(
             DemoModel.MULTIPLE_CHILD_ROUTERS -> TODO()
             DemoModel.MASTER_DETAIL -> TODO()
             DemoModel.DRAG_DISMISS -> TODO()
+        }.apply {
+            addNavigatorEventsListener(subNavigatorListener)
         }
     }
 }
